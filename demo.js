@@ -7,6 +7,7 @@ CLEAR = () => {c.clearRect(0,0,a.width,a.height)};
 drawEmoji = function(e) {
   c.font = `${S}px serif`;
   c.textBaseline = "top";
+  c.fillStyle = "#0000ff";
   c.fillText(e, 0, 0);
   return c.getImageData(0, 0, S, S);
 }
@@ -99,13 +100,17 @@ function drawParticles(particles, x=0, y=0) {
   });
 }
 
-D=30;
+D=100;
 function animate(b,e) {
   change = (e-b);
   delta = T/D
-  var ts=delta*delta;
-  var tc=ts*delta;
-  return b+change*(33*tc*ts + -106*ts*ts + 126*tc + -67*ts + 15*delta);
+  ts=delta*delta;
+  tc=ts*delta;
+  if (Math.random() > .95)
+    return b+change*(3*tc*ts + -11*ts*ts + 22*tc + -22*ts + 9*delta);
+  return b+change*(delta);
+
+  // return b+change*(56*tc*ts + -175*ts*ts + 200*tc + -100*ts + 20*delta);
 }
 
 function drawTransform(ps, x=0, y=0) {
@@ -121,11 +126,11 @@ function drawTransform(ps, x=0, y=0) {
   }
 }
 
-i1 = drawEmoji("👾");
+i1 = drawEmoji("🎩");
 d1 = dither(i1);
 p1 = atomize(d1)
 CLEAR();
-i2 = drawEmoji("🆒");
+i2 = drawEmoji("🐰");
 d2 = dither(i2);
 p2 = atomize(d2);
 CLEAR();
