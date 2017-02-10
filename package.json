@@ -1,0 +1,17 @@
+{
+  "name": "js1k2017",
+  "version": "1.0.0",
+  "description": "",
+  "main": "demo.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babili": "0.0.11",
+    "regpack": "^5.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "babili demo.js -o demo.min.js; node ./node_modules/.bin/regpack demo.min.js --hash2DContext true --contextVariableName c --crushGainFactor 1 --crushLengthFactor 0 --crushCopiesFactor 0 > demo.pack.js"
+  },
+  "author": "Matt Walsh <walsh9@gmail.com> (https://walsh9.net)",
+  "license": "MIT"
+}
