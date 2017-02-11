@@ -31,11 +31,10 @@ $=ch=> {
     [[ 1,0,.44],
      [-1,1,.19],
      [ 0,1,.31],
-     [ 1,1,.06]].forEach(dith => {
-      dx = ex + dith[0];
-      dy = ey + dith[1];
-      if(dx < S && dx >= 0 && dy < S) 
-        gs[dx + dy * S] += (qe * dith[2])+.5|0 
+     [ 1,1,.06]].forEach(di => {
+      idx = ex + di[0] + (ey + di[1]) * S
+      if(idx < gs[_]) 
+        gs[idx] += (qe * di[2])+.5|0 
     });
   });
   pt = [];
