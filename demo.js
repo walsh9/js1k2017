@@ -1,5 +1,7 @@
 S = 250
-T = STAGE = 0
+STAGE=0
+T=I=-50
+D=99
 W = a.width
 M = Math
 R = M.random
@@ -9,14 +11,12 @@ cls=_=>a.width=W
 $=ch=> {
   c.font = S+'px x';
   c.fillText(ch, 0, S);
-  im = c.getImageData(0, 10, S, S);
+  im = c.getImageData(0, 9, S, S);
   cls()
   gs = []
   for (i = im.data[l]; i-=4;) {
-    [rc, gc, bc] = im.data.slice(i, i+3);
-    lum = rc*848e-6 + gc*.0028 + bc*275e-6;
-    li = 0|((116 * M.pow(lum, 1/3) - 16)/100 * 255)
-    gs[i/4] = M.min(255,M.max(0,li))
+    [rc, gc, bc] = im.data.slice(i, i+3)
+    gs[i/4] = 0|M.min(255,M.max(0,296 * M.pow(rc*84e-5 + gc*.003 + bc*275e-6, 1/3) - 42))
   }
   gs.forEach((px, i) => {
     opx = px;
@@ -27,8 +27,7 @@ $=ch=> {
      [S-1,.19],
      [S,.31],
      [S+1,.06]].forEach(di => {
-      if(i+di[0] < gs[l]) { gs[i+di[0]] += (qe * di[1])+0.5|0}
-        im.data[i*4]=im.data[i*4+1]=im.data[i*4+2]=opx
+      if(i+di[0] < gs[l]) { gs[i+di[0]] += (qe * di[1])+.5|0}
     });
   });
   pt = [];
@@ -52,10 +51,9 @@ pad=(ptx, n)=>{
   ptx.map((v,i)=>ptx[ptx[i]=ptx[j=0|i+R()*(ptx[l]-i)],j]=v)
 };
 
-D=99;
-ani = (b,e) => b+(e-b)*T/D
+ani = (b,e) => (b+(e-b)*T/D)|0
 
-e = [..."🔥👾"].map($)
+e = [..."🕊👏🐣🎩🔮"].map($)
 t = []
 for(x=e[l]-1;x--;)
   t.push(ct(e[x+1], e[x]))
@@ -63,17 +61,20 @@ t.push(ct(e[0], e[e[l]-1]))
 
 setInterval(_=>{
   T++
-  if (STAGE < e[l] && T > 0) {
+  if (STAGE < e[l]) {
     cls()
-    document.bgColor='#cc8'
-    c.fillStyle = '#818'
-  c.font = S+'px serif';
+    document.bgColor='#eee'
+    c.fillStyle = '#333'
+    c.font = S+'px serif';
     t[STAGE].forEach((p) => {
-     c.fillRect(0|(ani(p[0], p[2]) + W/2-S/2), 0|(ani(p[1], p[3]) + 20), 1, 1);
+      x=W/2-S/2
+      y=20
+      if (T > 0) c.fillRect(ani(p[0], p[2])+x, ani(p[1], p[3])+y, 1, 1)
+      else c.fillRect(p[0] + x + R()+.5|0,p[1] + y + R()+.5|0, 1, 1)
     });
-    if (T >= D) T = -99,STAGE++
-  } else if (STAGE >= e[l])
-    STAGE=0,T=-99
+    if (T > D) T=I,STAGE++
+  } else 
+    STAGE=0,T=I
 }, 32);
 
 // document.onmousemove=e=>{mx=e.pageX;my=e.pageY}
