@@ -1,4 +1,4 @@
-S=250
+S=300
 STAGE=0
 T=I=-50
 D=99
@@ -10,9 +10,10 @@ l='length'
 cls=_=>a.width=W
 
 $=ch=> {
-  c.font = (S-B)+'px x';
-  c.fillText(ch, 0, S);
-  im = c.getImageData(0, B, S, S);
+  c.font=200+'px x'
+  c.textAlign='center'
+  c.fillText(ch, W/2, 200);
+  im = c.getImageData(0, 0, W, S);
   cls()
   gs = []
   for (i = im.data[l]; i-=4;) {
@@ -24,15 +25,15 @@ $=ch=> {
     qe = px - np
     gs[i] = np;
     [[1,.44],
-     [S-1,.19],
-     [S,.31],
-     [S+1,.06]].forEach(di => {
+     [W-1,.19],
+     [W,.31],
+     [W+1,.06]].forEach(di => {
       if(i+di[0] < gs[l]) { gs[i+di[0]] += (qe * di[1])+.5|0}
     });
   });
   pt = [];
   for(i = gs[l]; i--;) { 
-    if(!gs[i] && im.data[i*4+3] > 128) pt.push([i%S, 0|(i/S)])
+    if(!gs[i] && im.data[i*4+3] > 128) pt.push([i%W, 0|(i/W)])
   }
   pad(pt)
   return pt
@@ -67,9 +68,8 @@ setInterval(_=>{
     c.fillStyle = '#333'
     c.font = S+'px serif';
     t[STAGE].forEach(p=>{
-      x=W/2-S/2
-      if (T > 0) c.fillRect(ani(p[0], p[2])+x, ani(p[1], p[3])+B, 1, 1)
-      else c.fillRect(p[0] + x + R()+.5|0,p[1] + B + R()+.5|0, 1, 1)
+      if (T > 0) c.fillRect(ani(p[0], p[2]), ani(p[1], p[3]), 1, 1)
+      else c.fillRect(p[0] + R()+.5|0,p[1] + R()+.5|0, 1, 1)
     })
     if (T > D) T=I,STAGE++
   } else 
