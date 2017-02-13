@@ -3,17 +3,20 @@ STAGE=0
 T=I=-50
 P=99
 W = a.width
-V = W/2
+H = a.height
 M = Math
 R = M.random
 L='length'
-cls=_=>c.clearRect(0,0,W,a.height)
+X=M.max(1,M.min(W,H)/S)|0
+console.log(X)
+V=(X-1)*W/2
+cls=_=>c.clearRect(0,0,W,H)
 
 // convert a character to a list of dumb particle coordinates
 c.font=150+'px x'
 c.textAlign='center'
 A=a=> {
-  c.fillText(a, V, 150);
+  c.fillText(a, W/2, 150);
   im = c.getImageData(0, 0, W, S);
   dt = im.data
   cls()
@@ -72,12 +75,12 @@ setInterval(_=>{
   T++
   if (STAGE < e[L]) {
     cls()
-    document.bgColor='#eee'
-    c.fillStyle = '#333'
+    document.bgColor='#dde'
+    c.fillStyle = '#334'
     c.font = S+'px serif';
     t[STAGE].forEach(p=>{
-      if (T > 0) c.fillRect(D(p[0], p[2])*2 -V, D(p[1], p[3])*2, 2, 2)
-      else c.fillRect(p[0]*2 -V + R()+.5|0,p[1]*2 + R()+.5|0, 2, 2)
+      if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
+      else c.fillRect((p[0]+R()+.5|0)*X -V,(p[1]+R()+.5|0)*X, X, X)
     })
     if (T>P) T=I,STAGE++
   } else 
