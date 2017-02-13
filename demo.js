@@ -1,26 +1,26 @@
-S=300
+S=200
 STAGE=0
 T=I=-50
-D=99
-B=20
+P=99
 W = a.width
+V = W/2
 M = Math
 R = M.random
-l='length'
-cls=_=>a.width=W
+L='length'
+cls=_=>c.clearRect(0,0,W,a.height)
 
-$=ch=> {
-  c.font=200+'px x'
-  c.textAlign='center'
-  c.fillText(ch, W/2, 200);
+// convert a character to a list of dumb particle coordinates
+c.font=150+'px x'
+c.textAlign='center'
+A=a=> {
+  c.fillText(a, V, 150);
   im = c.getImageData(0, 0, W, S);
+  dt = im.data
   cls()
   gs = []
-  for (i = im.data[l]; i-=4;) {
-    [rc, gc, bc] = im.data.slice(i, i+3)
-    gs[i/4] = 0|M.min(255,M.max(0,296 * M.pow(rc*84e-5 + gc*.003 + bc*275e-6, 1/3) - 42))
-  }
+  for(i=dt[L];i-=4;)gs[i/4]=0|M.min(255,M.max(0,(dt[i]*.3+dt[i+1]*.6+dt[i+2]*.1)))
   gs.forEach((px, i) => {
+    if (px&&px^255) {
     np = px > 128 ? 255 : 0
     qe = px - np
     gs[i] = np;
@@ -28,50 +28,58 @@ $=ch=> {
      [W-1,.19],
      [W,.31],
      [W+1,.06]].forEach(di => {
-      if(i+di[0] < gs[l]) { gs[i+di[0]] += (qe * di[1])+.5|0}
-    });
+      if(i+di[0] < gs[L]) { gs[i+di[0]] += (qe * di[1])|0}
+    });}
   });
   pt = [];
-  for(i = gs[l]; i--;) { 
-    if(!gs[i] && im.data[i*4+3] > 128) pt.push([i%W, 0|(i/W)])
+  for(i = gs[L]; i--;) { 
+    if(!gs[i] && dt[i*4+3] > 128) pt.push([i%W, 0|(i/W)])
   }
-  pad(pt)
+  C(pt)
   return pt
 }
 
-ct = (p1, p2) => {
-  diff = p1[l] - p2[l]
-  pad(diff > 0 ? p2 : p1, M.abs(diff))
-  return p1.map((_,i) => [p1[i][0], p1[i][1], p2[i][0], p2[i][1]])
+// create a list of particle location maps from two location lists
+// a.k.a. pad and zip
+// [[x1,y1]...],[[x2,y2],...] => [[x1, y1, x2, y2],...]
+B=(a,b,c=a[L]-b[L]) => {
+  C(c>0?b:a,M.abs(c))
+  return a.map((_,i) => [a[i][0], a[i][1], b[i][0], b[i][1]])
 }
 
-pad=(ptx, n)=>{
-  for (;n--;) {
-    ptx.push(ptx[0|(R() * ptx[l])]);
-  }
-  ptx.map((v,i)=>ptx[ptx[i]=ptx[j=0|i+R()*(ptx[l]-i)],j]=v)
+// pad an array a, with random values from itself, until it has length b
+// so we can make the particle lists have the same number of particles
+// also shuffles, use without b to just shuffle.
+C=(a,b)=>{
+  // padding
+  for (;b--;) a.push(a[0|(R() * a[L])])
+  // fisher-yates shuffle i copied from somewhere
+  a.map((v,i)=>a[a[i]=a[j=0|i+R()*(a[L]-i)],j]=v)
 };
 
-ani = (b,e) => (b+(e-b)*T/D)|0
+// return a simple linear tween from value a to b for duration P at time T
+D=(a,b)=>(a+(b-a)*T/P)|0
 
-e = [..."🕊🐣🎩🔮"].map($)
+e = []
+//get a list of food emoji
+for(k=47;k--;)e.push(A(String.fromCodePoint(0x1f344+k)))
+C(e)
 t = []
-for(x=e[l]-1;x--;)
-  t.push(ct(e[x+1], e[x]))
-t.push(ct(e[0], e[e[l]-1]))
+for(x=e[L]-1;x--;) t.push(B(e[x+1], e[x]))
+t.push(B(e[0], e[e[L]-1]))
 
 setInterval(_=>{
   T++
-  if (STAGE < e[l]) {
+  if (STAGE < e[L]) {
     cls()
     document.bgColor='#eee'
     c.fillStyle = '#333'
     c.font = S+'px serif';
     t[STAGE].forEach(p=>{
-      if (T > 0) c.fillRect(ani(p[0], p[2]), ani(p[1], p[3]), 1, 1)
-      else c.fillRect(p[0] + R()+.5|0,p[1] + R()+.5|0, 1, 1)
+      if (T > 0) c.fillRect(D(p[0], p[2])*2 -V, D(p[1], p[3])*2, 2, 2)
+      else c.fillRect(p[0]*2 -V + R()+.5|0,p[1]*2 + R()+.5|0, 2, 2)
     })
-    if (T > D) T=I,STAGE++
+    if (T>P) T=I,STAGE++
   } else 
     STAGE=0,T=I
 }, 32);

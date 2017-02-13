@@ -1,0 +1,13 @@
+{
+  "presets": [["babili", {
+    "mangle": {
+      "blacklist": {
+        "a": true,
+        "b": false,
+        "c": false,
+        "d": false,
+        "g": false
+      }
+    }
+  }]]
+}
