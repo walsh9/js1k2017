@@ -14,6 +14,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel demo.js -o demo.min.js; node ./node_modules/.bin/regpack demo.min.js --hash2DContext true --contextVariableName c --crushGainFactor 1 --crushLengthFactor 0 --crushCopiesFactor 0 --varsNotReassigned a b c d g > demo.pack.js; cat shim-top.html demo.pack.js shim-bottom.html > index.html"
   },
+  "babel": {
+    "presets": [["babili", {
+      "mangle": {
+        "blacklist": {
+          "a": true,
+          "b": false,
+          "c": false,
+          "d": false,
+          "g": false
+        }
+      }
+    }]]
+  },
   "author": "Matt Walsh <walsh9@gmail.com> (https://walsh9.net)",
   "license": "MIT"
 }

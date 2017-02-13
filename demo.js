@@ -8,7 +8,6 @@ M = Math
 R = M.random
 L='length'
 X=M.max(1,M.min(W,H)/S)|0
-console.log(X)
 V=(X-1)*W/2
 cls=_=>c.clearRect(0,0,W,H)
 
@@ -16,8 +15,8 @@ cls=_=>c.clearRect(0,0,W,H)
 c.font=150+'px x'
 c.textAlign='center'
 A=a=> {
-  c.fillText(a, W/2, 150);
-  im = c.getImageData(0, 0, W, S);
+  c.fillText(a,W/2,150)
+  im = c.getImageData(0,0,W,S)
   dt = im.data
   cls()
   gs = []
@@ -31,10 +30,10 @@ A=a=> {
      [W-1,.19],
      [W,.31],
      [W+1,.06]].forEach(di => {
-      if(i+di[0] < gs[L]) { gs[i+di[0]] += (qe * di[1])|0}
-    });}
-  });
-  pt = [];
+      if(i+di[0] < gs[L]) gs[i+di[0]] += (qe * di[1])|0
+    })}
+  })
+  pt = []
   for(i = gs[L]; i--;) { 
     if(!gs[i] && dt[i*4+3] > 128) pt.push([i%W, 0|(i/W)])
   }
@@ -58,7 +57,7 @@ C=(a,b)=>{
   for (;b--;) a.push(a[0|(R() * a[L])])
   // fisher-yates shuffle i copied from somewhere
   a.map((v,i)=>a[a[i]=a[j=0|i+R()*(a[L]-i)],j]=v)
-};
+}
 
 // return a simple linear tween from value a to b for duration P at time T
 D=(a,b)=>(a+(b-a)*T/P)|0
@@ -75,9 +74,8 @@ setInterval(_=>{
   T++
   if (STAGE < e[L]) {
     cls()
-    document.bgColor='#dde'
+    a.style.background='#def'
     c.fillStyle = '#334'
-    c.font = S+'px serif';
     t[STAGE].forEach(p=>{
       if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
       else c.fillRect((p[0]+R()+.5|0)*X -V,(p[1]+R()+.5|0)*X, X, X)
@@ -85,6 +83,6 @@ setInterval(_=>{
     if (T>P) T=I,STAGE++
   } else 
     STAGE=0,T=I
-}, 32);
+}, 32)
 
 // document.onmousemove=e=>{mx=e.pageX;my=e.pageY}
