@@ -1,4 +1,4 @@
-mx=T=S=200
+mx=my=T=S=200;
 W = a.width
 H = a.height
 M = Math
@@ -63,7 +63,7 @@ C(e)
 
 setInterval(_=>{
   if (T>99) e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
-  T++
+  T+=2;
   cls()
   a.style.background='hsl('+mx+',90%,90%)'
   c.fillStyle='hsl('+my+',90%,20%)'
@@ -71,4 +71,4 @@ setInterval(_=>{
     if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
     else c.fillRect((p[0]-R()+.5|0)*X -V,(p[1]-R()+.5|0)*X, X, X)
   })
-}, 32)
+}, 64)

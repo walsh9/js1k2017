@@ -123,7 +123,7 @@
       var TOKEN_RELOAD_ONORIENTATIONCHANGE = true;
     </script>
 
-    <script type="demo">mx=T=S=200
+    <script type="demo">mx=my=T=S=200;
 W = a.width
 H = a.height
 M = Math
@@ -188,7 +188,7 @@ C(e)
 
 setInterval(_=>{
   if (T>99) e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
-  T++
+  T+=2;
   cls()
   a.style.background='hsl('+mx+',90%,90%)'
   c.fillStyle='hsl('+my+',90%,20%)'
@@ -196,7 +196,7 @@ setInterval(_=>{
     if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
     else c.fillRect((p[0]-R()+.5|0)*X -V,(p[1]-R()+.5|0)*X, X, X)
   })
-}, 32)</script>
+}, 64)</script>
     <script>
       (function(){var doc=document;var header=doc.getElementsByTagName("header")[0];var firstChild=header.firstChild;var p=doc.getElementsByClassName("p")[0];
       var n=doc.getElementsByClassName("n")[0];header.insertBefore(p,firstChild);header.insertBefore(n,firstChild);header.appendChild(doc.getElementsByTagName
