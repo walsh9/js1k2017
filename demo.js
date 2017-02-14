@@ -16,7 +16,7 @@ V=(X-1)*W/2
 cls=_=>c.clearRect(0,0,W,H)
 
 // get mouse movement, also mousedown to catch touch taps
-document.onmousemove=document.onmousedown=e=>{mx=e.pageX;my=e.pageY} 
+a.onmousemove=a.onmousedown=e=>{mx=e.pageX;my=e.pageY} 
 
 // set canvas properties for text (emoji) drawing
 c.font='150px x'
