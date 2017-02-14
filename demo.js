@@ -16,7 +16,7 @@ V=(X-1)*W/2
 cls=_=>c.clearRect(0,0,W,H)
 
 // get mouse movement, also mousedown to catch touch taps
-a.onmousemove=a.onmousedown=e=>{mx=e.pageX;my=e.pageY} 
+onmousemove=onmousedown=e=>{mx=e.pageX;my=e.pageY} 
 
 // set canvas properties for text (emoji) drawing
 c.font='150px x'
@@ -27,7 +27,7 @@ A=a=> {
   // draw a character to the canvas and read it as imagedata
   cls()
   c.fillText(a,W/2,150)
-  dt = c.getImageData(0,0,W,S).data
+  dt=c.getImageData(0,0,W,S).data
   cls()
 
   // convert imagedata to grayscale
@@ -35,14 +35,14 @@ A=a=> {
   for(i=dt[L];i-=4;)gs[i/4]=0|M.max(0,M.min(255,(dt[i]*.3+dt[i+1]*.6+dt[i+2]*.1)))
   
   // floyd-steinberg dithering to black/white only
-  gs.map((px,i) => {
-    if(px&&px^255)gs[i]=px>128?255:0,
+  gs.map((px,i)=>{
+    gs[i]=px>128?255:0,
     qe=px-gs[i],
     [[1,.44],
      [W-1,.2],
      [W,.3],
      [W+1,.06]].map(di => {
-      if(i+di[0]<gs[L])gs[i+di[0]]+=(qe*di[1])|0,gs[i]
+      gs[i+di[0]]+=(qe*di[1])|0,gs[i]
     })
   })
 
@@ -57,7 +57,7 @@ A=a=> {
 
 // create a list of pairs of points from two lists of points
 // [[x1,y1]...],[[x2,y2],...] => [[x1, y1, x2, y2],...]
-B=(a,b,c=a[L]-b[L]) => {
+B=(a,b,c=a[L]-b[L])=>{
   // pad the smallest list so they're both the same length
   C(c>0?b:a,M.abs(c))
 
@@ -69,7 +69,7 @@ B=(a,b,c=a[L]-b[L]) => {
 // also shuffles, use without parameter b to just shuffle
 C=(a,b)=>{
   // padding
-  for (;b--;) a.push(a[0|(R() * a[L])])
+  for(;b--;)a.push(a[0|(R()*a[L])])
   // fisher-yates shuffle i copied from somewhere
   a.map((v,i)=>a[a[i]=a[j=0|i+R()*(a[L]-i)],j]=v)
 }
@@ -84,7 +84,7 @@ C(e)
 
 setInterval(_=>{
   // set up a new animation at tf, reset timer to -50
-  if(T>99) e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
+  if(T>99)e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
 
   // increase time ticks
   T+=2;
@@ -100,7 +100,7 @@ setInterval(_=>{
   tf.map(p=>{
     // draw the points between the two emoji states, 
     // location is tweened based on time ticks (T)
-    if(T > 0) c.fillRect(D(p[0],p[2])*X-V,D(p[1],p[3])*X,X,X)
+    if(T > 0)c.fillRect(D(p[0],p[2])*X-V,D(p[1],p[3])*X,X,X)
 
     // pause on pre-animation state for a bit, 
     // with some random jitter
