@@ -1,4 +1,4 @@
-T=S=200
+mx=T=S=200
 W = a.width
 H = a.height
 M = Math
@@ -7,6 +7,7 @@ L='length'
 X=0|M.max(1,M.min(W,H)/S)
 V=(X-1)*W/2
 cls=_=>c.clearRect(0,0,W,H)
+document.onmousemove=document.onmousedown=e=>{mx=e.pageX;my=e.pageY} 
 
 // convert a character to a list of dumb particle coordinates
 c.font='150px x'
@@ -64,12 +65,10 @@ setInterval(_=>{
   if (T>99) e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
   T++
   cls()
-  a.style.background='#def'
-  c.fillStyle = '#336'
+  a.style.background='hsl('+mx+',90%,90%)'
+  c.fillStyle='hsl('+my+',90%,20%)'
   tf.map(p=>{
     if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
     else c.fillRect((p[0]-R()+.5|0)*X -V,(p[1]-R()+.5|0)*X, X, X)
   })
 }, 32)
-
-// document.onmousemove=e=>{mx=e.pageX;my=e.pageY}
