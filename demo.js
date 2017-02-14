@@ -64,8 +64,8 @@ C(e)
 setInterval(_=>{
   if (T>99) e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
   T+=2;
-  cls()
-  a.style.background='hsl('+mx+',90%,90%)'
+  c.fillStyle='hsl('+mx+',90%,90%)'
+  c.fillRect(0,0,W,H)
   c.fillStyle='hsl('+my+',90%,20%)'
   tf.map(p=>{
     if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
