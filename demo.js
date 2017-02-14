@@ -90,13 +90,13 @@ setInterval(_=>{
   T+=2;
 
   // background color
-  c.fillStyle='hsl('+mx+',90%,90%)'
+  c.fillStyle='hsl('+mx/W*255+',90%,90%)'
 
   // draw background
   c.fillRect(0,0,W,H)
 
   // pixel color
-  c.fillStyle='hsl('+my+',90%,20%)'
+  c.fillStyle='hsl('+my/H*255+',90%,20%)'
   tf.map(p=>{
     // draw the points between the two emoji states, 
     // location is tweened based on time ticks (T)
