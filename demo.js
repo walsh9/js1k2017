@@ -19,16 +19,15 @@ A=a=> {
   cls()
   gs = []
   for(i=dt[L];i-=4;)gs[i/4]=0|M.max(0,M.min(255,(dt[i]*.3+dt[i+1]*.6+dt[i+2]*.1)))
-  gs.forEach((px, i) => {
-    if (px&&px^255) {
-    gs[i] = px > 128 ? 255 : 0
-    qe = px - gs[i];
+  gs.map((px, i) => {
+    if (px&&px^255) gs[i] = px > 128 ? 255 : 0,
+    qe = px - gs[i],
     [[1,.44],
      [W-1,.2],
      [W,.3],
-     [W+1,.06]].forEach(di => {
-      if(i+di[0] < gs[L]) gs[i+di[0]] += (qe * di[1])|0
-    })}
+     [W+1,.06]].map(di => {
+      if(i+di[0] < gs[L]) gs[i+di[0]] += (qe * di[1])|0,gs[i]
+    })
   })
   pt = []
   for(i = gs[L]; i--;) if(!gs[i] && dt[i*4+3] > 128) pt.push([i%W, 0|(i/W)])
@@ -71,7 +70,7 @@ setInterval(_=>{
     cls()
     a.style.background='#def'
     c.fillStyle = '#336'
-    t[STAGE].forEach(p=>{
+    t[STAGE].map(p=>{
       if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
       else c.fillRect((p[0]+R()+.5|0)*X -V,(p[1]+R()+.5|0)*X, X, X)
     })
