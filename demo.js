@@ -1,6 +1,4 @@
-S=200
-STAGE=0
-T=I=-50
+T=S=200
 W = a.width
 H = a.height
 M = Math
@@ -14,6 +12,7 @@ cls=_=>c.clearRect(0,0,W,H)
 c.font='150px x'
 c.textAlign='center'
 A=a=> {
+  cls()
   c.fillText(a,W/2,150)
   dt = c.getImageData(0,0,W,S).data
   cls()
@@ -56,27 +55,21 @@ C=(a,b)=>{
 // return a simple linear tween from value a to b for duration 99 at time T
 D=(a,b)=>(a+(b-a)*T/99)|0
 
-e = []
 //get a list of food emoji
-for(k=47;k--;)e.push(A(String.fromCodePoint(0x1f344+k)))
+e = []
+for(k=47;k--;)e.push(String.fromCodePoint(0x1f344+k))
 C(e)
-t = []
-for(x=e[L]-1;x--;) t.push(B(e[x+1], e[x]))
-t.push(B(e[0], e[e[L]-1]))
 
 setInterval(_=>{
+  if (T>99) e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
   T++
-  if (STAGE < e[L]) {
-    cls()
-    a.style.background='#def'
-    c.fillStyle = '#336'
-    t[STAGE].map(p=>{
-      if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
-      else c.fillRect((p[0]+R()+.5|0)*X -V,(p[1]+R()+.5|0)*X, X, X)
-    })
-    if (T>99) T=I,STAGE++
-  } else 
-    STAGE=0,T=I
+  cls()
+  a.style.background='#def'
+  c.fillStyle = '#336'
+  tf.map(p=>{
+    if (T > 0) c.fillRect(D(p[0], p[2])*X -V, D(p[1], p[3])*X, X, X)
+    else c.fillRect((p[0]-R()+.5|0)*X -V,(p[1]-R()+.5|0)*X, X, X)
+  })
 }, 32)
 
 // document.onmousemove=e=>{mx=e.pageX;my=e.pageY}
