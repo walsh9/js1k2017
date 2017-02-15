@@ -1,5 +1,5 @@
 // init
-mx=my=T=S=200;
+mx=my=T=200
 
 // shortcuts
 W=a.width
@@ -9,30 +9,26 @@ R=M.random
 L='length'
 
 // integer scaling to screen width/height
-X=0|M.max(1,M.min(W,H)/S)
+X=M.max(1,M.min(W,H)/T)|0
 V=(X-1)*W/2
 
-// clear canvas
-cls=_=>c.clearRect(0,0,W,H)
-
 // get mouse movement, also mousedown to catch touch taps
-onmousemove=onmousedown=e=>{mx=e.pageX;my=e.pageY} 
+onmousemove=onmousedown=e=>{mx=e.pageX;my=e.pageY}
 
 // set canvas properties for text (emoji) drawing
 c.font='150px x'
 c.textAlign='center'
 
 // dither a character to b/w and convert it to a list of particle coordinates
-A=a=> {
+A=a=>{
   // draw a character to the canvas and read it as imagedata
-  cls()
+  c.clearRect(0,0,W,H)
   c.fillText(a,W/2,150)
-  dt=c.getImageData(0,0,W,S).data
-  cls()
+  dt=c.getImageData(0,0,W,200).data
 
   // convert imagedata to grayscale
   gs=[]
-  for(i=dt[L];i-=4;)gs[i/4]=0|M.max(0,M.min(255,(dt[i]*.3+dt[i+1]*.6+dt[i+2]*.1)))
+  for(i=dt[L];i-=4;)gs[i/4]=M.max(0,M.min(255,(dt[i]*.3+dt[i+1]*.6+dt[i+2]*.1)))|0
   
   // floyd-steinberg dithering to black/white only
   gs.map((px,i)=>{
@@ -41,14 +37,14 @@ A=a=> {
     [[1,.44],
      [W-1,.2],
      [W,.3],
-     [W+1,.06]].map(di => {
+     [W+1,.06]].map(di=>{
       gs[i+di[0]]+=(qe*di[1])|0,gs[i]
     })
   })
 
   // convert black pixels in dithered image to a list of points
   pt=[]
-  for(i=gs[L];i--;)if(!gs[i]&&dt[i*4+3]>128)pt.push([i%W,0|(i/W)])
+  for(i=gs[L];i--;)if(!gs[i]&&dt[i*4+3]>128)pt.push([i%W,i/W|0])
 
   // and shuffle
   C(pt)
@@ -62,16 +58,16 @@ B=(a,b,c=a[L]-b[L])=>{
   C(c>0?b:a,M.abs(c))
 
   //zip the lists
-  return a.map((_,i)=>[a[i][0],a[i][1],b[i][0],b[i][1]])
+  return a.map((_,i)=>[...a[i],...b[i]])
 }
 
 // pad an array a, with random values from itself, until it has length b
 // also shuffles, use without parameter b to just shuffle
 C=(a,b)=>{
   // padding
-  for(;b--;)a.push(a[0|(R()*a[L])])
+  for(;b--;)a.push(a[R()*a[L]|0])
   // fisher-yates shuffle i copied from somewhere
-  a.map((v,i)=>a[a[i]=a[j=0|i+R()*(a[L]-i)],j]=v)
+  a.map((v,i)=>a[a[i]=a[j=i+R()*(a[L]-i)|0],j]=v)
 }
 
 // simple linear tween: return value between a and b at time tick T of 99
@@ -83,11 +79,11 @@ for(k=47;k--;)e.push(String.fromCodePoint(0x1f344+k))
 C(e)
 
 setInterval(_=>{
+  // increase time ticks
+  T+=2
+
   // set up a new animation at tf, reset timer to -50
   if(T>99)e.push(e.shift()),tf=B(A(e[0]),A(e[1])),T=-50
-
-  // increase time ticks
-  T+=2;
 
   // background color
   c.fillStyle='hsl('+mx/W*255+',90%,90%)'
@@ -97,13 +93,13 @@ setInterval(_=>{
 
   // pixel color
   c.fillStyle='hsl('+my/H*255+',90%,20%)'
-  tf.map(p=>{
+  tf.map(p=>
     // draw the points between the two emoji states, 
     // location is tweened based on time ticks (T)
-    if(T > 0)c.fillRect(D(p[0],p[2])*X-V,D(p[1],p[3])*X,X,X)
+    T>0?c.fillRect(D(p[0],p[2])*X-V,D(p[1],p[3])*X,X,X):
 
     // pause on pre-animation state for a bit, 
     // with some random jitter
-    else c.fillRect((p[0]-R()+.5|0)*X -V,(p[1]-R()+.5|0)*X,X,X)
-  })
+    c.fillRect((p[0]-R()+.5|0)*X -V,(p[1]-R()+.5|0)*X,X,X)
+  )
 }, 67)

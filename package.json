@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel demo.js -o demo.min.js; node ./node_modules/.bin/regpack demo.min.js --hash2DContext true --contextVariableName c --crushGainFactor 1 --crushLengthFactor 0 --crushCopiesFactor 0 --varsNotReassigned 'a b c d g' > demo.pack.js; cat shim-top.html demo.pack.js shim-bottom.html > index.html"
+    "build": "babel demo.js -o demo.min.js; node ./node_modules/.bin/regpack demo.min.js --hash2DContext true --contextVariableName c --crushGainFactor 1 --crushLengthFactor 0 --crushCopiesFactor 0 --varsNotReassigned 'a b c d g' > demo.pack.js; cat shim-top.html demo.js shim-bottom.html > index.html"
   },
   "babel": {
     "presets": [
