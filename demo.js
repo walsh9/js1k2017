@@ -70,9 +70,16 @@ C=(a,b)=>{
 // simple linear tween: return value between a and b at time tick T of 50
 D=(a,b)=>(a+(b-a)*T/50)|0
 
-// get a list of food emoji
+// get a list of emoji
 e=[]
-for(k=47;k--;)e.push(String.fromCodePoint(0x1f344+k))
+E=(a,b)=>{for(;b--;)e.push(String.fromCodePoint(a+b))}
+// food
+E(127812,47)
+// animals, body parts
+E(128e3,80)
+// faces
+E(128512,56)
+
 C(e)
 
 setInterval(_=>{
@@ -83,7 +90,7 @@ setInterval(_=>{
   if(T>50)e.push(e.shift()),n=B(A(e[0]),A(e[1])),T=-50
 
   // background color
-  c.fillStyle='hsl('+x/W*255+',90%,90%)'
+  c.fillStyle='hsl('+x/W*255+',90%,80%)'
 
   // draw background
   c.fillRect(0,0,W,H)
