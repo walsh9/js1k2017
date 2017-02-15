@@ -73,8 +73,8 @@ D=(a,b)=>(a+(b-a)*T/50)|0
 // get a list of emoji
 e=[]
 E=(a,b)=>{for(;b--;)e.push(String.fromCodePoint(a+b))}
-// food
-E(127812,47)
+// weather, plants, food
+E(127780,80)
 // animals, body parts
 E(128e3,80)
 // faces
