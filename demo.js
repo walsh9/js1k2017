@@ -73,12 +73,14 @@ D=(a,b)=>(a+(b-a)*T/50)|0
 // get a list of emoji
 e=[]
 E=(a,b)=>{for(;b--;)e.push(String.fromCodePoint(a+b))}
-// weather, plants, food
-E(127780,80)
-// animals, body parts
-E(128e3,80)
+// flowers, food, drink
+E(127799,70)
+// animals
+E(128e3,61)
 // faces
 E(128512,56)
+// spooky stuff
+E(128121,8)
 
 C(e)
 
