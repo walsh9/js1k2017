@@ -7,7 +7,7 @@
   -->
   <head>
     <meta charset="utf-8">
-    <title>JS1k 2017 - NNNN - Divining Dust</title>
+    <title>JS1k 2017 - NNNN - Dream Dust</title>
     <meta name="author" content="Matt Walsh">
     <link rel="icon" type="image/png" href="http://js1k.com/favicon.png">
     <link rel="canonical" href="http://js1k.com/2017-magic/demo/NNNN">
@@ -39,16 +39,16 @@
           <a href="http://js1k.com/2017-magic">2017</a>
           <strong></strong> demo
           &mdash;
-          "Divining Dust" by Matt Walsh
+          "Dream Dust" by Matt Walsh
         </h1>
         <p>
           <em>
-            Glimpses into thoughts, nearby dimensions, and possible futures
+            Magical dust that reads subconcious thoughts
           </em>
         </p>
         <aside>
           &mdash;
-          1010 bytes
+          1024 bytes
           &mdash;
           <a href="http://js1k.com/2017-magic/details/NNNN">demo details</a>
           &mdash;
@@ -139,14 +139,15 @@ V=(X-1)*W/2
 onmousemove=onmousedown=e=>{x=e.pageX;y=e.pageY}
 
 // set canvas properties for text (emoji) drawing
-c.font=T+'px x'
+c.font='130px x'
+c.textBaseline='top' 
 c.textAlign='center'
 
 // dither a character to b/w and convert it to a list of particle coordinates
 A=a=>{
   // draw a character to the canvas and read it as imagedata
   c.clearRect(0,0,W,H)
-  c.fillText(a,W/2,150)
+  c.fillText(a,W/2,10)
   s=c.getImageData(0,0,W,200).data
 
   // convert imagedata to monochrome

@@ -14,14 +14,15 @@ V=(X-1)*W/2
 onmousemove=onmousedown=e=>{x=e.pageX;y=e.pageY}
 
 // set canvas properties for text (emoji) drawing
-c.font=T+'px x'
+c.font='130px x'
+c.textBaseline='top' 
 c.textAlign='center'
 
 // dither a character to b/w and convert it to a list of particle coordinates
 A=a=>{
   // draw a character to the canvas and read it as imagedata
   c.clearRect(0,0,W,H)
-  c.fillText(a,W/2,150)
+  c.fillText(a,W/2,10)
   s=c.getImageData(0,0,W,200).data
 
   // convert imagedata to monochrome
